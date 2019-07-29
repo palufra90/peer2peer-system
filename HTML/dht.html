@@ -1,0 +1,286 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="css.css">
+<title>Module dht</title>
+</head>
+
+<body>
+
+<div class="header">
+
+<ul class="navindex">
+    <li><a href="overview.html"><b>overview</b></a></li>
+    <li><a href="dht-hrl.html"><b>dht.hrl</b></a></li>
+    <li><a class="this" href="dht.html"><b>dht</b></a></li>
+    <li><a href="connect.html"><b>connect</b></a></li>
+    <li><a href="trade.html"><b>trade</b></a></li>
+    <li><a href="aux.html"><b>aux</b></a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<h1>Module dht</h1>
+<p>DHT management: read, write, update and delete operations.</p>
+
+<ul class= "index">
+    <li><a href="#index">Function Index</a></li>
+    <li><a href="#functions">Function Details</a></li>
+    <li><a href="#private">Private Functions</a></li>
+</ul>
+
+<a id="index"></a><h2>Function Index</h2>
+
+<table>
+    <tr>
+        <th class="first"></th>
+        <th class="second"></th>
+    </tr>
+    <tr>
+        <td><a href="#search_oldest_job-1">search_oldest_job/1</a></td>
+        <td>Searches the oldest job.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_status-2">get_status/2</a></td>
+        <td>Returns the status of the job.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_job-2">get_job/2</a></td>
+        <td>Reads the job.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_job_result-2">get_job_result/2</a></td>
+        <td>Reads the job result.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_job_node-2">get_job_node/2</a></td>
+        <td>Reads the node that inserted the job.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_beam-2">get_beam/2</a></td>
+        <td>Reads the binary.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_candidates-2">get_candidates/2</a></td>
+        <td>Reads the candidates list.</td>
+    </tr>
+    <tr>
+        <td><a href="#get_my_jobs-1">get_my_jobs/1</a></td>
+        <td>Reads the object with node jobs list.</td>
+    </tr>
+    <tr>
+        <td><a href="#list_my_jobs-1">list_my_jobs/1</a></td>
+        <td>Returns node jobs list.</td>
+    </tr>
+    <tr>
+        <td><a href="#add_important_job-4">add_important_job/4</a></td>
+        <td>Adds an important job.</td>
+    </tr>
+    <tr>
+        <td><a href="#add_job-4">add_job/4</a></td>
+        <td>Adds a job.</td>
+    </tr>
+    <tr>
+        <td><a href="#delete_my_job-2">delete_my_job/2</a></td>
+        <td>Node deletes a specified job.</td>
+    </tr>
+    <tr>
+        <td><a href="#delete_my_jobs-1">delete_my_jobs/1</a></td>
+        <td>Node deletes all his jobs if not running.</td>
+    </tr>
+    <tr>
+        <td><a href="#check_my_jobs-1">check_my_jobs/1</a></td>
+        <td>Restores jobs from nodedown to ready.</td>
+    </tr>
+    <tr>
+        <td><a href="#delete_my_terminated_jobs-1">delete_my_terminated_jobs/1</a></td>
+        <td>The node deletes all his terminated jobs.</td>
+    </tr>   
+    <tr>
+        <td><a href="#reset_all-1">reset_all/1</a></td>
+        <td>Deletes all the elements in all the buckets. USE IT ONLY FOR TESTING.</td>
+    </tr>   
+</table> 
+
+<a id="functions"></a><h2>Function Details</h2>
+
+    <a id="search_oldest_job-1"></a><h3>search_oldest_job/1</h3>
+    <p class="spec"><code>search_oldest_job(Pid::pid()) -> [binary(), binary()]| [notfound, notfound]</code></p>
+    <p>Searches the oldest important job, then the oldest ready job.</p>
+
+    <a id="get_status-2"></a><h3>get_status/2</h3>
+    <p class="spec"><code>get_status(Pid::pid(), KeyJob::binary()) -> binary()|{error, term()}</code></p>
+    <p>Returns the status of the job.</p>
+
+    <a id="get_job-2"></a><h3>get_job/2</h3>
+    <p class="spec"><code>get_job(Pid::pid(), KeyJob::binary()) -> job()|{error, term()}</code></p>
+    <p>Reads the job.</p>
+
+    <a id="get_job_result-2"></a><h3>get_job_result/2</h3>
+    <p class="spec"><code>get_job_result(Pid::pid(), KeyJob::binary()) -> term()|{error, term()}</code></p>
+    <p>Reads the job result.</p>
+
+    <a id="get_job_node-2"></a><h3>get_job_node/2</h3>
+    <p class="spec"><code>get_job_node(Pid::pid(), KeyJob::binary()) -> node()|{error, term()}</code></p>
+    <p>Reads the job result.</p>
+
+    <a id="get_beam-2"></a><h3>get_beam/2</h3>
+    <p class="spec"><code>get_beam(Pid::pid(), Module::atom()) -> code()|{error, term()}</code></p>
+    <p>Reads the binary.</p>
+
+    <a id="get_candidates-2"></a><h3>get_candidates/2</h3>
+    <p class="spec"><code>get_candidates(Pid::pid(), KeyJob::binary()) -> candidates()|{error, term()}</code></p>
+    <p>Reads the candidates list.</p>
+
+    <a id="get_my_jobs-1"></a><h3>get_my_jobs/1</h3>
+    <p class="spec"><code>get_my_jobs(Pid::pid()) -> myJobs|{error, term()}</code></p>
+    <p>Reads the object with node jobs list.</p>
+
+    <a id="list_my_jobs-1"></a><h3>list_my_jobs/1</h3>
+    <p class="spec"><code>list_my_jobs(Pid::pid()) -> [binary()]</code></p>
+    <p>Returns node jobs list.</p>
+
+    <a id="add_important_job-4"></a><h3>add_important_job/4</h3>
+    <p class="spec"><code>add_important_job(Pid::pid(), Module::atom(), Function::atom(), Args::[atom()]) -> ok|error</code></p>
+    <p>Adds an important job, with high priority.</p>
+
+    <a id="add_job-4"></a><h3>add_job/4</h3>
+    <p class="spec"><code>add_job(Pid::pid(), Module::atom(), Function::atom(), Args::[atom()]) -> ok|error</code></p>
+    <p>Adds a job.</p>
+
+    <a id="delete_my_job-2"></a><h3>delete_my_job/2</h3>
+    <p class="spec"><code>delete_my_job(Pid::pid(), KeyJob::binary()) -> ok|error|{error, term()} </code></p>
+    <p>node deletes a specified job, if not running, from his own.</p>
+
+    <a id="delete_my_jobs-1"></a><h3>delete_my_jobs/1</h3>
+    <p class="spec"><code>delete_my_jobs(Pid::pid()) -> ok|{error, term()} </code></p>
+    <p>The node deletes all his jobs.</p>
+
+    <a id="check_my_jobs-1"></a><h3>check_my_jobs/1</h3>
+    <p class="spec"><code>check_my_jobs(Pid::pid()) -> ok|{error, term()}</code></p>
+    <p>Checks if there are jobs marked as nodedown, and restores them to ready.</p>
+
+    <a id="delete_my_terminated_jobs-1"></a><h3>delete_my_terminated_jobs/1</h3>
+    <p class="spec"><code>delete_my_terminated_jobs(Pid::pid()) -> ok|{error, term()}</code></p>
+    <p>The node deletes all his terminated jobs.</p>
+
+    <a id="reset_all-1"></a><h3>reset_all/1</h3>
+    <p class="spec"><code>reset_all(Pid::pid()) -> ok|{error, term()}</code></p>
+    <p>Deletes all the elements in all the buckets. USE IT ONLY FOR TESTING.</p>
+
+<a id="private"></a><h2>Private Functions</h2>
+
+    <a id="search_jobs-2"></a><h3>search_jobs/2</h3>
+    <p class="spec"><code>search_jobs(Pid::pid(), State::binary()) -> {ok, index_results()}</code></p>
+    <p>Searches job according to the state.</p>
+
+    <a id="add_job-5"></a><h3>add_job/5</h3>
+    <p class="spec"><code>add_job(Pid::pid(), Module::atom(), Function::atom(), Args::[atom()], Priority::binary()) -> ok|error</code></p>
+    <p>Inserts job in dht and loads the binary checking if the module already exists.</p>
+
+    <a id="add_module-2"></a><h3>add_module/2</h3>
+    <p class="spec"><code>add_module(Pid::pid(), Module::atom()) -> ok|error|error1</code></p>
+    <p>Inserts binary into bucket Code.</p>
+
+    <a id="verify_module-3"></a><h3>verify_module/3</h3>
+    <p class="spec"><code>verify_module(Pid::pid(), Module::atom(), Code::{atom(), binary(), string()}) -> ok|error</code></p>
+    <p>Verifies if that module has been already stored in the bucket Modules and if a different module with the same name already exists.</p>
+
+    <a id="add_candidate-3"></a><h3>add_candidate/3</h3>
+    <p class="spec"><code>add_candidate(Pid::pid(), KeyJob::binary(), Performance::int()) -> ok|{error, term()}</code></p>
+    <p>Adds a candidate to the candidates list.</p>
+
+    <a id="add_my_job-2"></a><h3>add_my_job/2</h3>
+    <p class="spec"><code>add_my_job(Pid::pid(), KeyJob::binary()) -> ok|{error, term()}</code></p>
+    <p>Adds job to the node job list.</p>
+
+    <a id="save_job-3"></a><h3>save_job/3</h3>
+    <p class="spec"><code>save_job(Pid::pid(), Job::job(), Priority::binary()) -> ok|{error, term()}</code></p>
+    <p>Saves job in dht, key=timestamp, secondary index=status.</p>
+
+    <a id="save_module-2"></a><h3>save_module/2</h3>
+    <p class="spec"><code>save_module(Pid::pid(), Module::code()) -> ok{error, term()}</code></p>
+    <p>Saves binary in dht, key=module name.</p>
+
+    <a id="save_candidate-2"></a><h3>save_candidate/2</h3>
+    <p class="spec"><code>save_candidate(Pid::pid(), List::candidates()) -> ok|{error, term()}</code></p>
+    <p>Saves candidates list, key=job timestamp.</p>
+
+    <a id="save_my_jobs-2"></a><h3>save_my_jobs/2</h3>
+    <p class="spec"><code>save_my_jobs(Pid::pid(), JobList::my_jobs()) -> ok|{error, term()}</code></p>
+    <p>Saves a job in the node jobs list.</p>
+    
+    <a id="return_ready-3"></a><h3>return_ready/3</h3>
+    <p class="spec"><code>return_ready(Pid::pid(), KeyJob::binary(), Priority::binary()) -> ok|{error, term()}</code></p>
+    <p>Resets the status and the candidates list.</p>
+
+    <a id="set_secondary_index-3"></a><h3>set_secondary_index/3</h3>
+    <p class="spec"><code>set_secondary_index(Pid::pid(), KeyJob::binary(), Status::binary()) -> ok|{error, term()}</code></p>
+    <p>Sets the secondary index.</p>
+
+    <a id="running_job-2"></a><h3>running_job/2</h3>
+    <p class="spec"><code>running_job(Pid::pid(), KeyJob::binary()) -> ok|{error, term()}</code></p>
+    <p>Updates the status from ready to running.</p>
+
+    <a id="nodedown_job-2"></a><h3>nodedown_job/2</h3>
+    <p class="spec"><code>nodedown_job(Pid::pid(), KeyJob::binary()) -> ok|{error, term()} </code></p>
+    <p>Updates the status from ready to nodedown.</p>
+
+    <a id="terminated_job-3"></a><h3>terminated_job/3</h3>
+    <p class="spec"><code>terminated_job(Pid::pid(), KeyJob::binary(), Result::term()) -> ok|{error, term()}  </code></p>
+    <p>Updates from running to terminated and stores the result.</p>
+
+    <a id="terminated_job-3"></a><h3>empty_candidates/2</h3>
+    <p class="spec"><code>empty_candidates(Pid::pid(), KeyJob::binary())</code></p>
+    <p>Resets candidates list.</p>
+
+    <a id="delete_job-2"></a><h3>delete_job/2</h3>
+    <p class="spec"><code>delete_job(Pid::pid(), KeyJob::binary()) -> ok|{error, term()} </code></p>
+    <p>Deletes job from the Jobs bucket, from the Candidates bucket and from the job list in the bucket MyJobs.</p>
+
+    <a id="delete_job_candidates-2"></a><h3>delete_job_candidates/2</h3>
+    <p class="spec"><code>delete_job_candidates(Pid::pid(), KeyJob::binary()) -> ok|{error, term()} </code></p>
+    <p>Deletes the job from the Candidates bucket.</p>
+
+    <a id="empty_my_jobs-1"></a><h3>empty_my_jobs/1</h3>
+    <p class="spec"><code>empty_my_jobs(Pid::pid()) -> ok|{error, term()}</code></p>
+    <p>Deletes all the elements in the bucket MyJobs.</p>
+
+    <a id="delete_my_safe_job-2"></a><h3>delete_my_safe_job/2</h3>
+    <p class="spec"><code>delete_my_safe_job(Pid::pid(), KeyJob:binary()) -> ok|error|{error, term()}</code></p>
+    <p>Deletes a specified not running job.</p>
+    
+    <a id="reset_or_delete-3"></a><h3>reset_or_delete/3</h3>
+    <p class="spec"><code>reset_or_delete(Pid::pid(), KeyJob::binary(), Priority::binary()) -> ok|{error, term()}</code></p>
+    <p>Asks the user if he wants reset or delete the job.</p>
+
+    <a id="reset_jobs-1"></a><h3>reset_jobs/1</h3>
+    <p class="spec"><code>reset_jobs(Pid::pid()) -> ok|{error, term()}</code></p>
+    <p>Deletes all the elements in the bucket Jobs.</p>
+
+    <a id="reset_my_jobs-1"></a><h3>reset_my_jobs/1</h3>
+    <p class="spec"><code>reset_my_jobs(Pid::pid()) -> ok|{error, term()}</code></p>
+    <p>Deletes all the elements in the bucket MyJobs.</p>
+
+    <a id="reset_modules-1"></a><h3>reset_modules/1</h3>
+    <p class="spec"><code>reset_modules(Pid::pid()) -> ok|{error, term()}  </code></p>
+    <p>Deletes all the elements in the bucket Modules.</p>
+
+    <a id="reset_candidates-1"></a><h3>reset_candidates/1</h3>
+    <p class="spec"><code>reset_candidates(Pid::pid()) -> ok|{error, term()} </code></p>
+    <p>Deletes all the elements in the bucket Candidates.</p>
+
+</div>
+
+<div class= "footer">
+
+    <p class="credits">Francesca Pal&ugrave; &nbsp;100908&nbsp; palu.francesca@spes.uniud.it &nbsp;-&nbsp; Cinzia Piccolo &nbsp;199471&nbsp; piccolo.cinzia@spes.uniud.it<br>2015</p>
+
+</div>
+
+</body>
+
+</html>

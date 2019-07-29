@@ -1,0 +1,148 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="css.css">
+<title>Module connect</title>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<ul class="navindex">
+    <li><a href="overview.html"><b>overview</b></a></li>
+    <li><a href="dht-hrl.html"><b>dht.hrl</b></a></li>
+    <li><a href="dht.html"><b>dht</b></a></li>
+    <li><a class="this" href="connect.html"><b>connect</b></a></li>
+    <li><a href="trade.html"><b>trade</b></a></li>
+    <li><a href="aux.html"><b>aux</b></a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<h1>Module connect</h1>
+<p>Connection management and message handling.</p>
+
+<ul class= "index">
+    <li><a href="#index">Function Index</a></li>
+    <li><a href="#functions">Function Details</a></li>
+    <li><a href="#private">Private Functions</a></li>
+</ul>
+
+<a id="index"></a><h2>Function Index</h2>
+
+<table>
+    <tr>
+        <th class="first"></th>
+        <th class="second"></th>
+    </tr>
+    <tr>
+        <td><a href="#start-1">start/1</a></td>
+        <td>Connects the client to the Riak node and waits for messages.</td>
+    </tr>
+    <tr>
+        <td><a href="#stop-0">stop/0</a></td>
+        <td>Terminates the server.</td>
+    </tr>
+    <tr>
+        <td><a href="#pid_link-1">pid_link/1</a></td>
+        <td>Connects client to the Riak node.</td>
+    </tr>
+    <tr>
+        <td><a href="#first_apply-1">first_apply/1</a></td>
+        <td>The first candidate applies to execute the job.</td>
+    </tr>
+    <tr>
+        <td><a href="#apply-1">apply/1</a></td>
+        <td>Other candidates apply to execute the job.</td>
+    </tr>
+    <tr>
+        <td><a href="#running-4">running/4</a></td>
+        <td>Worker notifies that the job is running.</td>
+    </tr>
+    <tr>
+        <td><a href="#terminated-3">terminated/3</a></td>
+        <td>Worker notifies that the job is terminated.</td>
+    </tr>
+    <tr>
+        <td><a href="#exception-3">exception/3</a></td>
+        <td>Worker notifies that an exception occurs.</td>
+    </tr>
+</table> 
+
+<a id="functions"></a><h2>Function Details</h2>
+
+    <a id="start-1"></a><h3>start/1</h3>
+    <p class="spec"><code>start(RiakNode::atom()) -> pid()|{error,term()}</code></p>
+    <p>Connects the client to the Riak node and waits for messages. If some of its jobs are nodedown, they are changed to ready.</p>
+
+    <a id="stop-0"></a><h3>stop/0</h3>
+    <p class="spec"><code>stop() -> {stop, normal, stopped, pid()}</code></p>
+    <p>Terminates the server.</p>
+
+    <a id="pid_link-1"></a><h3>pid_link/1</h3>
+    <p class="spec"><code>pid_link(RiakNode::atom()) -> pid() </code></p>
+    <p>Client connects to Riak node.</p>
+
+    <a id="first_apply-1"></a><h3>first_apply/1</h3>
+    <p class="spec"><code>first_apply(KeyJob::binary()) -> {chosen_worker, atom()}</code></p>
+    <p>The first candidate applies to execute the job.</p>
+
+    <a id="apply-1"></a><h3>apply/1</h3>
+    <p class="spec"><code>apply(KeyJob::binary()) -> {chosen_worker, atom()}</code></p>
+    <p>Other candidates apply to execute the job.</p>
+
+    <a id="running-4"></a><h3>running/4</h3>
+    <p class="spec"><code>running(KeyJob::binary(), Runner::atom(), Priority::binary(), PidWorker::pid()) -> {atom(), running, binary()}</code></p>
+    <p>Worker notifies that the job is running.</p>
+
+    <a id="terminated-3"></a><h3>terminated/3</h3>
+    <p class="spec"><code>terminated(KeyJob::binary(), Result::term(), Terminator::atom()) -> {atom(), terminated, binary(), with_result, term()}</code></p>
+    <p>Worker notifies that the job is terminated.</p>
+
+    <a id="exception-3"></a><h3>exception/3</h3>
+    <p class="spec"><code>exception(KeyJob::binary(), Runner::atom(), Priority::binary()) -> {exception_delivered, binary()}</code></p>
+    <p>Worker notifies that an exception occurs.</p>
+
+<a id="private"></a><h2>Private Functions</h2>
+
+    <a id="init-1"></a><h3>init/1</h3>
+    <p class="spec"><code>init(Pid::pid()) -> {ok, pid()}</code></p>
+    <p>Initilizes the state with the Pid.</p>
+
+    <a id="handle_call"></a><h3>handle_call</h3>
+    <p class="spec"><code>handle_call({first_apply, KeyJob::binary()}, _From, Pid::pid()) -> {reply, {chosen_worker, node()}, pid()}</code></p>
+    <p>After ten seconds since the first candidate, the node chooses the best worker.</p>
+    <p class="spec"><code>handle_call({apply, KeyJob::binary()}, _From, Pid::pid()) -> {reply, {chosen_worker, node()}, pid()}></code></p>
+    <p>The node replies to the other candidates.</p>
+    <p class="spec"><code>handle_call({running, KeyJob::binary(), Runner::node(), Priority::binary(), PidWorker::pid()}, _From, pid()) -> {reply, {node(), running, binary()}, pid()}</code></p>
+    <p>Job is running, the node starts monitoring the worker. If the worker crashes, the job returns to the original state.</p>
+    <p class="spec"><code>handle_call({terminated, KeyJob::binary(), Result::term(), Terminator::node()}, _From, Pid::pid()) -> {reply, {node(), terminated, binary(), with_result, term()}, pid()}</code></p>
+    <p>Job is terminated, the node receives the result.</p>
+    <p class="spec"><code>handle_call({exception, KeyJob::binary(), Runner::node(), Priority::binary()}, _From, Pid::pid()) -> {reply, {exception_delivered, binary()}, pid()}</code></p>
+    <p>An exception occurs during the execution, the job has returned to the original state</p>
+   
+    <p class="spec"><code>handle_call(stop, _From, Pid::pid()) -> {stop, normal, stopped, Pid::pid()}</code></p>
+
+    <p class="spec"><code>handle_cast(_Msg, State::term()) -> {noreply, term()}</code></p>
+
+    <p class="spec"><code>handle_info(_Info, State::term()) -> {noreply, term()}</code></p>
+
+    <p class="spec"><code>terminate(_Reason, _State) -> ok</code></p>
+
+    <p class="spec"><code>code_change(_OldVsn, State::term(), _Extra) -> {ok, term()}</code></p><br>
+
+</div>
+
+<div class= "footer">
+
+    <p class="credits">Francesca Pal&ugrave; &nbsp;100908&nbsp; palu.francesca@spes.uniud.it &nbsp;-&nbsp; Cinzia Piccolo &nbsp;199471&nbsp; piccolo.cinzia@spes.uniud.it<br>2015</p>
+
+</div>
+
+</body>
+
+</html>

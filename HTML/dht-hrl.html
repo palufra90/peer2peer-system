@@ -1,0 +1,84 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="css.css">
+<title>dht.hrl</title>
+</head>
+
+<body>
+
+<div class="header">
+
+<ul class="navindex">
+    <li><a href="overview.html"><b>overview</b></a></li>
+    <li><a class="this" href="dht-hrl.html"><b>dht.hrl</b></a></li>
+    <li><a href="dht.html"><b>dht</b></a></li>
+    <li><a href="connect.html"><b>connect</b></a></li>
+    <li><a href="trade.html"><b>trade</b></a></li>
+    <li><a href="aux.html"><b>aux</b></a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<h1>Module dht.hrl</h1>
+<p>Record definitions.</p>
+
+<ul class= "index">
+    <li><a href="#types">Data Types</a></li>
+    <li><a href="#record">Record Definitions</a></li>
+</ul>
+
+<a id="types"></a><h2>Data Types</h2>
+
+    <h3>job()</h3>
+    <p class="spec"><code>job() = #job{time::string(), node::node(), module::atom(), function::atom(), args::[atom()], term()})</code></p>
+
+    <h3>code()</h3>
+    <p class="spec"><code>code() = #code{module::atom(), binary::binary()})</code></p>
+
+    <h3>candidates()</h3>
+    <p class="spec"><code>candidates() = #candidates, {job::binary(), nodes::[node(), int()]})</code></p>
+
+    <h3>myJobs()</h3>
+    <p class="spec"><code>myJobs() = #myJobs, {node::node(), jobs::[binary()]})</code></p>
+
+<a id="record"></a><h2>Record Definitions</h2>
+
+    <h3>job</h3>
+    <p class="spec"><code>-record(job, {time::string(), node::node(), module::atom(), function::atom(), args::[atom()], term()}).</code></p>
+    <p>time: timestamp of the moment when the job is inserted in DHt<br>
+    node: node that inserted the job in DHT<br>
+    module: name of the module of the function to execute<br>
+    function: name of function to execute<br>
+    args: args of the function to execute<br>
+    result: result of the job</p>
+
+    <h3>code</h3>
+    <p class="spec"><code>-record(code, {module::atom(), binary::binary()}).</code></p>
+    <p>module: name of the module of the function to execute<br>
+    binary: binary of the object code of the function to execute</p>
+
+    <h3>candidates</h3>
+    <p class="spec"><code>-record(candidates, {job::binary(), nodes::[node(), int()]}).</code></p>
+    <p>job: key of the job<br>
+    nodes: list of the candidates with respective node name and performance</p>
+
+    <h3>myJobs</h3>
+    <p class="spec"><code>-record(myJobs, {node::node(), jobs::[binary()]}).</code></p>
+    <p>node: node name<br>
+    jobs: list of keys of the jobs added from the node</p>
+
+</div>
+
+<div class= "footer">
+
+    <p class="credits">Francesca Pal&ugrave; &nbsp;100908&nbsp; palu.francesca@spes.uniud.it &nbsp;-&nbsp; Cinzia Piccolo &nbsp;199471&nbsp; piccolo.cinzia@spes.uniud.it<br>2015</p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+/* Baseline rhythm */
+body {
+   font-size: 16px;
+   font-family: Helvetica, sans-serif;
+   /*margin-left: 8px;*/
+   /*margin-right: 8px;*/
+   margin-top: 0;
+   margin-left: 0;
+   margin-bottom: 0;
+   color: #333;
+}
+
+div.main{
+   margin-left: 12px;
+   margin-right: 8px;
+}
+
+p.credits{
+   text-align: center;
+   padding: 0;
+   margin: 0;
+}
+
+p {
+   font-size: 1em; /* 16px */
+   line-height: 1.5em; /* 24px */
+   margin: 0 0 1.5em 0;
+   color: #333;
+}
+
+p.spec {
+   margin-bottom: 0;
+   padding-left: 1.25em;
+   background-color: #EEE;
+   font-size: 0.875em;
+}
+
+h1, h2, h3 {color: #333}
+
+h1 {
+   font-size: 1.5em; /* 24px */
+   line-height: 1em; /* 24px */
+   margin-top: 1em;
+   margin-bottom: 0;
+   border-left: 0.5em solid #FA0;
+   padding-left: 0.5em;
+}
+
+h2 {
+   font-size: 1.375em; /* 22px */
+   line-height: 1.0909em; /* 24px */
+   margin-top: 1.0909em;
+   margin-bottom: 0em;
+}
+
+h3 {
+   font-size: 1.25em; /* 20px */
+   line-height: 1.2em; /* 24px */
+   margin-top: 1.2em;
+   margin-bottom: 0em;
+   border-left: 0.5em solid #FA0;
+   padding-left: 0.5em;
+   background: #FC9;
+}
+
+code{
+   font-family: "Andale Mono", "Inconsolata", "Monaco", "DejaVu Sans Mono", monospaced;
+   font-size: 0.875em;
+}
+
+/*.navbar img, hr { display: none }*/
+
+table, td {
+   border-style: solid;
+   border-width: 1px;
+   color: #333;
+}
+
+table{
+   border-collapse: collapse;
+   width: 100%;
+   border-spacing: 0px;
+}
+
+th.first { 
+   width: 30%;;
+   border-style: hidden;
+   border-bottom-style: solid;
+   border-bottom-width: 1px;
+}
+
+th.second{ 
+    width: 70%;
+    border-style: hidden;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+td{
+   border-color: #333;
+   padding: 2px; 
+   vertical-align:top;
+}
+
+ul.navindex {
+   margin: 0 0 1.5em 0;
+   background-color: #FA0;
+   list-style: none;
+   padding: 1.2em;
+   list-style-type: none;
+   text-align: center;
+   width: 98%;
+}
+
+ul.navindex li {
+   display: inline;
+   margin-left: 1em;
+   padding-left: 0;
+}
+
+ul.navindex li a{
+   font-size: 1.5em; /* 20px */
+   line-height: 1.2em; /* 24px */
+   color: #FFF;
+   font-family: Helvetica, sans-serif;
+   float: center;
+   text-decoration: none;
+}
+
+ul.navindex li a.this{ color: #333; }
+
+ul.index {
+   list-style: none;
+   padding-left: 0;
+   margin: 0;
+}
+
+ul.index li {
+   display: inline;
+   padding-left: 0;
+   padding-right: 0.75em;
+}
+
+a { color: #C60; }

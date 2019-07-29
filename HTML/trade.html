@@ -1,0 +1,88 @@
+ <!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="css.css">
+<title>Module trade</title>
+</head>
+
+<body>
+
+<div class="header">
+
+<ul class="navindex">
+    <li><a href="overview.html"><b>overview</b></a></li>
+    <li><a href="dht-hrl.html"><b>dht.hrl</b></a></li>
+    <li><a href="dht.html"><b>dht</b></a></li>
+    <li><a href="connect.html"><b>connect</b></a></li>
+    <li><a class="this" href="trade.html"><b>trade</b></a></li>
+    <li><a href="aux.html"><b>aux</b></a></li>
+</ul>
+
+</div>
+
+<div class="main">
+
+<h1>Module trade</h1>
+<p>Job management: request, assignment and execution.</p>
+
+<ul class= "index">
+    <li><a href="#functions">Function Details</a></li>
+    <li><a href="#private">Private Functions</a></li>
+</ul>
+
+<a id="functions"></a><h2>Function Details</h2>
+
+    <a id="ask_for_job-1"></a><h3>ask_for_job/1</h3>
+    <p class="spec"><code>ask_for_job(Pid::pid()) -> ok|tuple()</code></p>
+    <p>Asks for the oldest job.</p>
+
+<a id="private"></a><h2>Private Functions</h2>
+
+    <a id="submit_for_job-3"></a><h3>submit_for_job/3</h3>
+    <p class="spec"><code>submit_for_job(Pid::pid(), KeyJob::binary(), Priority::binary()) -> ok|{atom(), terminated, binary(), with_result, term()}|{exception_delivered, binary()}</code></p>
+    <p>Node submits to the worker list with current performance.</p>
+
+    <a id="verify_chosen-4"></a><h3>verify_chosen/4</h3>
+    <p class="spec"><code>verify_chosen(Pid::pid(), To::atom(), KeyJob::binary(), Priority::binary()) -> ok|{atom(), terminated, binary(), with_result, term()}|{exception_delivered, binary()}</code></p>
+    <p>Worker checks the status of the node submitting the job. If the node crashes, the worker asks for another job.</p>
+
+    <a id="request_job-4"></a><h3>request_job/5</h3>
+    <p class="spec"><code>request_job(Pid::pid(), To:atom(), KeyJob::binary(), Chosen::binary(), Priority::binary()) -> ok|{atom(), terminated, binary(), with_result, term()}|{exception_delivered, binary()}</code></p>
+    <p>Worker, if it's the chosen one, runs the job. If an exception occurs, notifies the node which submitted the job.</p>
+
+    <a id="execute_job-3"></a><h3>execute_job/4</h3>
+    <p class="spec"><code>execute_job(Pid::pid(), KeyJob::binary(), RJob::job(), Priority::binary()) -> ok|{atom(), terminated, binary(), with_result, term()}|{exception_delivered, binary()}</code></p>
+    <p>Worker retrieves the informations to run the job and notifies the node which submitted the job. Worker changes status to running. Notifies it's running the job. Runs the job. Sends the result. Updates the job in the dht with the new state and the result.</p>
+
+    <a id="first_submit-2"></a><h3>first_submit/2</h3>
+    <p class="spec"><code>first_submit(Node::atom(), KeyJob::binary()) -> {chosen_worker, atom()}|{badrpc, Reason}</code></p>
+    <p>First node submits for job</p>
+
+    <a id="submit-2"></a><h3>submit/2</h3>
+    <p class="spec"><code>submit(Node::atom(), KeyJob::binary()) -> {chosen_worker, atom()}|{badrpc, Reason}</code></p>
+    <p>Notifies for job.</p>
+
+    <a id="notify_running-4"></a><h3>notify_running/4</h3>
+    <p class="spec"><code>notify_running(Node::atom(), KeyJob::binary(), Priority::binary(), PidWorker::pid()) -> {atom(), running, binary()}|{badrpc, Reason}</code></p>
+    <p>Notifies that job is running.</p>
+
+    <a id="notify_terminated-3"></a><h3>notify_terminated/3</h3>
+    <p class="spec"><code>notify_terminated(Node::atom(), KeyJob::binary(), Result::term()) -> {atom(), terminated, binary(), with_result, term()}|{badrpc, Reason}</code></p>
+    <p>Notifies that job is terminated.</p>
+
+    <a id="deliver_exception-3"></a><h3>deliver_exception/3</h3>
+    <p class="spec"><code>deliver_exception(Node::atom(), KeyJob::binary(), Priority::binary()) -> {exception_delivered, binary()}|{badrpc, Reason}</code></p>
+    <p>Notifies that an exception occurred.</p>
+
+</div>
+
+<div class= "footer">
+
+    <p class="credits">Francesca Pal&ugrave; &nbsp;100908&nbsp; palu.francesca@spes.uniud.it &nbsp;-&nbsp; Cinzia Piccolo &nbsp;199471&nbsp; piccolo.cinzia@spes.uniud.it<br>2015</p>
+
+</div>
+
+</body>
+
+</html>
